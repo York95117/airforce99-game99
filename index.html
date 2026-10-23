@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#eef5e6"><title>空機99・F-104整備學堂</title>
+<style>
+:root{--ink:#1f2a3a;--y:#ffd84d;--sh:30vh}
+@supports(height:1dvh){:root{--sh:30dvh}}
+@media(max-height:680px){:root{--sh:21vh}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+body{margin:0;background:#eef5e6;color:var(--ink);font:700 18px/1.5 "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;min-height:100vh;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.scr{display:none;max-width:520px;margin:0 auto;padding:10px 12px 24px}.scr.on{display:block}
+.box{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);background:#fff;border-radius:4px}
+canvas{display:block;width:100%;height:100%;image-rendering:pixelated}
+.stg{position:relative;width:min(100%,calc(var(--sh)*1.7778));aspect-ratio:16/9;margin:8px auto;overflow:hidden;background:#7ec8f2}
+.tit{padding:10px 12px;text-align:center;background:var(--y)}.tit small{font-size:16px}.tit h1{margin:2px 0;font-size:28px;line-height:1.2;text-shadow:2px 2px 0 #fff}.tit p{margin:0;font-size:18px}
+.btn{display:block;width:100%;font:inherit;font-weight:900;font-size:22px;min-height:64px;margin-top:12px;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);background:var(--y);color:var(--ink);border-radius:4px;padding:8px 14px;cursor:pointer;touch-action:manipulation}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn.g{background:#7bd88f}.btn.w{background:#fff}.btn.sm{font-size:18px;min-height:48px}
+.opt{display:flex;align-items:center;gap:10px;text-align:left;background:#fff}
+.opt .lt{flex:none;width:34px;height:34px;border:3px solid var(--ink);background:var(--y);display:grid;place-items:center;font-size:20px}
+.opt .tx{flex:1;font-size:22px;line-height:1.3}.opt .mk{flex:none;font-size:18px;text-align:right}
+.opt.bad{background:#e3e3e3;color:#6a6a6a;box-shadow:none;transform:translate(3px,3px)}.opt.ok{background:#b9f0bf}
+.opt:disabled{cursor:default}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;gap:8px}.bar b{font-size:17px}
+#pips{display:flex;gap:4px;margin:10px 0 0}#pips span{flex:1;height:26px;border:2px solid var(--ink);background:#fff;font-size:15px;text-align:center;line-height:22px}#pips .d{background:#4cd964}#pips .c{background:var(--y)}
+.card{padding:10px 12px;margin-top:6px}.tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;padding:0 8px;border-radius:2px}
+.card h2{margin:4px 0 0;font-size:23px;line-height:1.4}
+.fb{margin-top:14px;padding:10px 12px;font-size:18px;min-height:64px;background:#fffbe0}
+.bub{position:absolute;left:50%;top:6px;transform:translateX(-50%);max-width:94%;background:#fff;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);padding:2px 10px;font-size:16px;text-align:center;display:none;pointer-events:none}
+.fl{position:absolute;left:50%;top:38%;transform:translateX(-50%);font-size:24px;font-weight:900;color:#fff;background:#2a9d3a;border:3px solid var(--ink);padding:0 12px;white-space:nowrap;animation:up 1.8s forwards;pointer-events:none}
+@keyframes up{0%{opacity:0;margin-top:20px}15%{opacity:1}100%{opacity:0;margin-top:-34px}}
+.tk .card,.tk #opts,.tk #nx,.tk #fb{display:none}
+input{font:inherit;font-size:20px;width:100%;min-height:52px;border:3px solid var(--ink);border-radius:4px;padding:6px 10px;margin-top:4px}
+.one{font-size:21px;text-align:center;margin:8px 0}.how{padding:10px 14px;margin-top:16px;font-size:18px}.how ul{margin:4px 0;padding-left:20px}.note{font-size:18px;color:#8a2b22}
+#res h1{text-align:center;font-size:30px;margin:12px 0 4px;text-shadow:2px 2px 0 var(--y)}.q{text-align:center;font-size:20px;margin:2px 0}
+.st{padding:8px 14px;margin-top:12px;font-size:20px}.st div{display:flex;justify-content:space-between;gap:8px}.st .t{display:block;text-align:center;font-size:22px;background:var(--y);margin:4px -8px 0;padding:2px}
+textarea{width:100%;font:inherit;font-size:18px;margin-top:8px}.mg{text-align:center;min-height:28px}
+</style></head><body>
+<section id="home" class="scr on">
+<div class="box tit"><small>空軍機械學校 99期 紀念</small><h1>空機99・F-104整備學堂</h1><p>一起動腦，讓榮耀再次升空！</p></div>
+<div class="stg box"><canvas id="cvH" width="320" height="180"></canvas></div>
+<p class="one">回答8個小問題，一起讓F-104榮耀起飛！</p>
+<label>你的暱稱（最多8字）<input id="nick" maxlength="8" placeholder="空機99弟兄" autocomplete="off"></label>
+<button class="btn g" id="go">▶ 開始整備考驗</button>
+<button class="btn w sm snd">音效：開</button>
+<p class="mg" id="best"></p>
+<div class="box how"><b>玩法說明</b><ul><li>每局8題，只要點選答案，不用打字。</li><li>沒有倒數。答錯不扣分，錯的選項會變灰，再想想就好。</li><li>第一次就答對99分；答錯後答對66分；全部完成再加990分。</li><li>題目皆為一般航空維修常識，未引用F-104專屬規格，故無額外資料來源。</li></ul><p class="note">本遊戲為航空知識與同學紀念用途，不作為實際維修指引。</p></div>
+</section>
+<section id="game" class="scr">
+<div class="box bar"><b>空機99・F-104整備學堂</b><span id="sc">0分</span><button class="btn w sm snd" style="width:auto;margin:0;min-height:40px;font-size:16px">音效：開</button></div>
+<div id="pips"></div>
+<div class="stg box" id="stgG"><canvas id="cvG" width="320" height="180"></canvas><div class="bub" id="bub"></div></div>
+<div class="box card"><span class="tag" id="qt"></span><h2 id="qq"></h2></div>
+<div id="opts"></div>
+<div class="box fb" id="fb" aria-live="polite"></div>
+<button class="btn g" id="nx" hidden>下一題 ▶</button>
+</section>
+<section id="res" class="scr">
+<div class="box" style="aspect-ratio:320/230"><canvas id="cvR" width="320" height="230"></canvas></div>
+<h1>空機99・榮耀起飛</h1>
+<p class="q">當年同窗習技，今日情誼長存。</p><p class="q">空機九九，友誼歷久彌堅。</p>
+<div class="box st"><div><span>暱稱</span><span id="rN"></span></div><div><span>完成題數</span><span>8／8</span></div><div><span>首次答對</span><span id="rF"></span></div><div><span>總分</span><span id="rS"></span></div><div><span>本機最高分</span><span id="rB"></span></div><span class="t" id="rT"></span></div>
+<button class="btn g" id="again">再玩一次</button><button class="btn" id="cp">複製戰績</button><button class="btn w" id="hm">回到首頁</button>
+<p class="mg" id="cpm"></p><textarea id="ta" rows="4" readonly hidden></textarea>
+<p class="mg" style="font-size:16px">國徽為像素化意象，非官方標準圖樣。</p>
+</section>
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)},KEY="k99f104best";
+// ===== 題庫：o=[穩定ID,文字]，a=正確ID，z=場景區域，k=動畫類型 =====
+var Q=[
+{t:"用途配對",z:"gear",k:"zone",q:"飛機在地面停放與滑行時，主要由哪個部件支撐？",o:[["a","起落架"],["b","座艙罩"],["c","天線"]],a:"a",ex:"起落架負責支撐飛機，並協助地面移動。",h:"想想看，飛機停在地上時，是靠什麼撐著、讓輪子滾動？"},
+{t:"看圖辨認",z:"canopy",k:"zone",q:"圖中覆蓋飛行員座艙的透明罩（看上方箭頭），叫什麼？",o:[["a","座艙罩"],["b","進氣口"],["c","尾翼"]],a:"a",ex:"座艙罩保護座艙，同時讓飛行員保持視野。",h:"箭頭指的是飛行員頭上的那一塊喔。",arrow:1},
+{t:"用途配對",z:"engine",k:"zone",q:"哪個系統提供噴射機前進所需的主要推力？",o:[["a","引擎"],["b","輪胎"],["c","航行燈"]],a:"a",ex:"噴射引擎產生推力，讓飛機向前飛行。",h:"想想看，飛機向前衝的力量從哪裡來？"},
+{t:"用途配對",z:"wing",k:"zone",q:"飛機的機翼，主要協助產生什麼？",o:[["a","升力"],["b","輪胎抓地力"],["c","無線電訊號"]],a:"a",ex:"機翼是飛機產生升力的重要部位。",h:"飛機為什麼能離開地面？和機翼有關喔。",say:"空機99，默契依舊！"},
+{t:"情境判斷",k:"chk",q:"整備工作項目很多，怎麼做比較不容易遺漏？",o:[["a","依核准檢查表逐項確認"],["b","只憑記憶"],["c","只看外觀"]],a:"a",ex:"按照核准的檢查表確認，可以降低遺漏的機會。",h:"想想看，有什麼東西可以幫我們一項一項核對？"},
+{t:"情境判斷",k:"tool",q:"整備結束後，發現少了一支工具，應該怎麼做？",o:[["a","通報並依程序查找"],["b","當作沒看見"],["c","下次再找"]],a:"a",ex:"工具清點與異常通報，是維護安全的重要環節。",h:"工具不見了，安全第一，要讓大家都知道。"},
+{t:"情境判斷",k:"fod",q:"在機坪看到螺絲或小金屬片，較適當的處理是？",o:[["a","依安全規定處理並通報"],["b","踢到旁邊"],["c","不用理會"]],a:"a",ex:"機坪異物可能造成危害，應依規定處理。",h:"小東西也可能造成大問題喔。"},
+{t:"情境判斷",k:"sa",q:"檢查時發現不明滲漏，應該怎麼做？",o:[["a","通報並交由合格人員依程序處理"],["b","擦掉就算完成"],["c","猜測原因後直接放行"]],a:"a",ex:"發現異常應依程序確認，不能自行忽略或草率放行。",h:"發現異常，要交給懂的人依程序確認。",say:"整備完成，弟兄們，準備起飛！"}];
+var ZN={gear:[34,8,64,16],canopy:[72,-8,26,10],engine:[-8,-2,22,14],wing:[46,8,32,8]};
+// ===== 狀態 =====
+var S,cur="home",T=0,last=0,running=true,audioOn=true,AC=null,bt;
+function ns(){return{i:0,score:0,first:0,tries:0,done:[],state:"home",anim:null,tk:0,name:"",order:[]}}
+S=ns();
+// ===== 繪圖 =====
+function R(c,x,y,w,h,f){c.fillStyle=f;c.fillRect(Math.round(x),Math.round(y),w,h)}
+function cloud(c,x,y){R(c,x+6,y+4,24,6,"#fff");R(c,x+2,y+6,32,4,"#fff");R(c,x+12,y,12,6,"#fff");R(c,x+4,y+10,28,2,"#dff1fb")}
+function chk(c,x,y,on){R(c,x,y,9,9,on?"#4cd964":"#2b3a4d");if(on){R(c,x+1,y+4,2,2,"#fff");R(c,x+3,y+5,2,2,"#fff");R(c,x+5,y+3,2,2,"#fff");R(c,x+6,y+1,2,2,"#fff")}}
+function plane(c,x,y,o){o=o||{};c.save();c.translate(x,y);if(o.rot)c.rotate(o.rot);
+R(c,0,-14,12,16,"#b9c2cc");R(c,-6,-17,28,3,"#9aa5b1");
+R(c,0,0,100,9,"#d3dae1");R(c,0,6,100,3,"#9aa5b1");R(c,100,1,10,7,"#d3dae1");R(c,110,2,9,5,"#d3dae1");R(c,119,3,7,3,"#c4ccd4");R(c,126,4,5,1,"#555");
+R(c,58,2,16,5,"#4a5561");R(c,48,9,28,3,"#b3bcc6");R(c,54,12,16,2,"#98a3af");
+R(c,74,-4,22,4,"#26385c");R(c,79,-6,12,2,"#26385c");R(c,o.gl?78:82,-5,5,1,o.gl?"#fff":"#8fb3ff");
+R(c,32,0,10,9,"#1b3f9b");R(c,35,3,4,3,"#fff");R(c,36,1,2,1,"#fff");R(c,36,7,2,1,"#fff");R(c,-4,2,5,5,"#3a3f46");
+if(o.fl){var f=Math.floor(T*20)%2;R(c,-12,3,8,3,"#ff9a3c");R(c,-18-f*3,4,6,1,"#ffd84d")}
+if(o.g){R(c,88,9,2,9,"#444");R(c,86,16,6,5,"#222");R(c,40,12,2,6,"#444");R(c,38,16,6,5,"#222")}
+c.restore()}
+function man(c,x,y,pose,sh){var b=Math.floor(T*2)%2,sk="#f2c9a0",g=sh||"#5b7d3f";y+=b;
+R(c,x+2,y+19,5,7,"#4a6a33");R(c,x+8,y+19,5,7,"#4a6a33");R(c,x+1,y+26,6,3,"#222");R(c,x+8,y+26,6,3,"#222");
+R(c,x+1,y+7,12,12,g);R(c,x+3,y+9,8,5,"#fff");c.fillStyle="#1f2a3a";c.font="bold 5px monospace";c.fillText("99",x+4,y+13.3);
+R(c,x+3,y,8,7,sk);R(c,x+2,y-2,10,4,"#3f5a2c");R(c,x+9,y+1,4,1,"#2c4020");R(c,x+5,y+3,1,2,"#222");R(c,x+9,y+3,1,2,"#222");R(c,x+6,y+5,3,1,"#c0644a");
+R(c,x-2,y+8,3,9,g);
+if(pose==="salute"){R(c,x+12,y+6,3,5,g);R(c,x+9,y+1,5,2,g);R(c,x+8,y+1,2,2,sk)}
+else if(pose==="thumb"){R(c,x+12,y+4,3,9,g);R(c,x+12,y+1,3,3,sk)}
+else if(pose==="tool"){var w=Math.floor(T*6)%2;R(c,x+12,y+8,3,5,g);R(c,x+15,y+5+w*3,6,3,g);R(c,x+20,y+2+w*3,3,8,"#aab2ba")}
+else if(pose==="clip"){R(c,x+12,y+9,3,6,g);R(c,x+14,y+8,9,11,"#c58b4a");R(c,x+15,y+9,7,9,"#fff");if(S.anim&&S.anim.t>.6){R(c,x+16,y+13,2,2,"#2a9d3a");R(c,x+18,y+14,2,2,"#2a9d3a");R(c,x+20,y+11,2,2,"#2a9d3a")}}
+else R(c,x+12,y+8,3,9,g)}
+function emblem(c,cx,cy,r){c.fillStyle="#1b3f9b";c.beginPath();c.arc(cx,cy,r,0,7);c.fill();c.fillStyle="#fff";
+for(var k=0;k<12;k++){var a=k*Math.PI/6-Math.PI/2,w=.2;c.beginPath();c.moveTo(cx+Math.cos(a-w)*r*.4,cy+Math.sin(a-w)*r*.4);c.lineTo(cx+Math.cos(a)*r*.93,cy+Math.sin(a)*r*.93);c.lineTo(cx+Math.cos(a+w)*r*.4,cy+Math.sin(a+w)*r*.4);c.fill()}
+c.fillStyle="#1b3f9b";c.beginPath();c.arc(cx,cy,r*.37,0,7);c.fill();c.fillStyle="#fff";c.beginPath();c.arc(cx,cy,r*.29,0,7);c.fill()}
+function scene(c,m){c.imageSmoothingEnabled=false;var A=S.anim,k=A&&A.k,PX=100,PY=106,rot=0,gear=true,fl=false;
+["#6ec1f0","#86cff5","#a1dbf8","#bfe8fb","#d9f2fd"].forEach(function(b,i){R(c,0,i*20,320,20,b)});
+[[10,12,.5],[140,34,.3],[240,8,.6]].forEach(function(a){cloud(c,((a[0]+T*a[2]*8)%360)-40,a[1])});
+for(var i=0;i<9;i++)R(c,i*40-8,88+(i*7%3)*5,48,30,"#9bd58f");
+R(c,0,106,320,22,"#6fbf6a");R(c,6,84,64,30,"#b8c2cc");R(c,6,80,64,6,"#7d8a99");R(c,26,94,26,20,"#56606c");R(c,38,94,2,20,"#3f4852");
+R(c,284,66,12,48,"#e6e6e6");R(c,280,58,20,10,"#4a6fa5");R(c,282,60,16,3,"#bfe8fb");R(c,289,48,2,10,"#333");R(c,291,48,8,4,"#e5584b");
+R(c,0,126,320,54,"#a7afb8");R(c,0,126,320,3,"#8b949e");for(var x=0;x<320;x+=40)R(c,x+6,160,24,3,"#fff");
+var pm="idle",pb="idle";
+if(m==="home"){pm=Math.floor(T/2)%2?"thumb":"idle";pb="salute"}
+else if(m==="take"){var p=Math.min(1,S.tk/5);PX=100+p*p*300;gear=p<.55;fl=p>.08;if(p>.4){var u=(p-.4)/.6;PY=106-u*u*90;rot=-Math.min(.35,u*.5)}pm=pb="salute"}
+else if(k){pm=k==="chk"?"clip":k==="fod"?"thumb":"tool";pb=k==="fod"||k==="sa"?"tool":"thumb"}
+plane(c,PX,PY,{g:gear,rot:rot,fl:fl,gl:k==="zone"&&A.z==="canopy"&&Math.floor(T*8)%2});
+if(m==="game"){for(var j=0;j<8;j++)chk(c,PX+4+j*12,PY-32,!!S.done[j]);
+if(S.state==="ask"&&Q[S.i].arrow){var b=Math.floor(T*3)%2*2;R(c,PX+84,PY-22+b,4,8,"#e5584b");R(c,PX+81,PY-14+b,10,2,"#e5584b");R(c,PX+83,PY-12+b,6,2,"#e5584b");R(c,PX+85,PY-10+b,2,2,"#e5584b")}
+if(k==="zone"){var z=ZN[A.z];c.strokeStyle=Math.floor(T*8)%2?"#ffd84d":"#fff";c.lineWidth=2;c.strokeRect(PX+z[0],PY+z[1],z[2],z[3]);chk(c,PX+z[0]+z[2]/2-5,PY+z[1]-12,true)}
+R(c,165,136,22,13,"#d9534f");R(c,171,133,10,3,"#333");R(c,165,141,22,2,"#a83a35");
+if(S.i===5){var wx=120,wy=142;if(S.done[5]&&k==="tool"){var q=Math.min(1,A.t/1.2);wx=120+48*q;wy=142-10*q}if(!S.done[5]||k==="tool"){R(c,wx,wy,9,2,"#888");R(c,wx-2,wy-2,3,6,"#888")}}
+if(S.i===6&&(!S.done[6]||(k==="fod"&&A.t<.8))){R(c,238,134,4,3,"#555");R(c,248,137,5,2,"#999")}
+if(S.i===7){R(c,176,127,10,2,"#3b3b3b");if(S.done[7])chk(c,177,116,true)}}
+man(c,44,100,pm);man(c,262,100,pb,"#6c8c4a")}
+function resDraw(){var c=$("#cvR").getContext("2d");c.imageSmoothingEnabled=false;
+["#4fb3ee","#6ec1f0","#8fd0f6","#b3e2fa","#d9f2fd"].forEach(function(b,i){R(c,0,i*46,320,46,b)});
+[[10,96,.6],[200,150,.4],[90,196,.5]].forEach(function(a){cloud(c,((a[0]+T*a[2]*8)%360)-40,a[1])});
+for(var i=0;i<12;i++)if((Math.floor(T*2)+i)%3===0)R(c,(i*97)%316,(i*53)%130,2,2,"#fff");
+emblem(c,160,76,58);plane(c,95,172+Math.round(Math.sin(T*2)*2),{rot:-.06,fl:true})}
+// ===== 音效 =====
+function ac(){try{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended"&&!document.hidden)AC.resume()}catch(e){AC=null}return AC}
+function tone(f,d,ty,v,w){if(!audioOn)return;var c=ac();if(!c)return;var t=c.currentTime+(w||0),o=c.createOscillator(),g=c.createGain();o.type=ty||"square";o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v||.04,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+d+.05)}
+var sfx={click:function(){tone(520,.08,"square",.03)},ok:function(){[523,659,784].forEach(function(f,i){tone(f,.15,"square",.04,i*.1)})},bad:function(){tone(330,.15,"triangle",.05);tone(262,.2,"triangle",.05,.15)},done:function(){[523,659,784,1047,784,1047].forEach(function(f,i){tone(f,.18,"square",.04,i*.12)})},
+fly:function(){if(!audioOn)return;var c=ac();if(!c)return;var t=c.currentTime,o=c.createOscillator(),g=c.createGain();o.type="sawtooth";o.frequency.setValueAtTime(70,t);o.frequency.exponentialRampToValueAtTime(380,t+4.5);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.03,t+.6);g.gain.linearRampToValueAtTime(.0001,t+4.8);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+5)}};
+function setSnd(){document.querySelectorAll(".snd").forEach(function(b){b.textContent="音效："+(audioOn?"開":"關")})}
+// ===== 流程 =====
+function show(id){cur=id;["home","game","res"].forEach(function(k){$("#"+k).classList.toggle("on",k===id)});window.scrollTo(0,0)}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function bub(s,ms){var b=$("#bub");b.textContent=s;b.style.display="block";clearTimeout(bt);bt=setTimeout(function(){b.style.display="none"},ms||2800)}
+function fl(s){var d=document.createElement("div");d.className="fl";d.textContent=s;$("#stgG").appendChild(d);setTimeout(function(){d.remove()},1900)}
+function pips(){var p=$("#pips");p.textContent="";for(var i=0;i<8;i++){var s=document.createElement("span");s.textContent=S.done[i]?"✓":i+1;s.className=S.done[i]?"d":i===S.i&&S.state==="ask"?"c":"";p.appendChild(s)}}
+function score(){$("#sc").textContent=S.score+"分"}
+function start(){var n=Array.from($("#nick").value.trim()).slice(0,8).join("");S=ns();S.name=n||"空機99弟兄";clearTimeout(bt);$("#bub").style.display="none";$("#game").classList.remove("tk");sfx.click();show("game");score();load()}
+function load(){var q=Q[S.i];S.state="ask";S.tries=0;S.anim=null;S.order=shuffle(q.o.slice());
+$("#qt").textContent="第"+(S.i+1)+"／8題・"+q.t;$("#qq").textContent=q.q;
+var o=$("#opts");o.textContent="";S.order.forEach(function(p,i){var b=document.createElement("button");b.className="btn opt";b.type="button";b.dataset.id=p[0];
+b.innerHTML='<span class="lt"></span><span class="tx"></span><span class="mk"></span>';b.children[0].textContent="ABC"[i];b.children[1].textContent=p[1];o.appendChild(b)});
+$("#fb").textContent="點選你認為正確的答案。答錯不扣分，慢慢想！";$("#nx").hidden=true;pips()}
+function pick(id,b){if(S.state!=="ask")return;var q=Q[S.i];
+if(id===q.a){S.state="ok";var first=S.tries===0;S.score+=first?99:66;if(first)S.first++;S.done[S.i]=true;
+document.querySelectorAll(".opt").forEach(function(x){x.disabled=true});b.classList.add("ok");b.querySelector(".mk").textContent="✓ 正確";
+S.anim={k:q.k,z:q.z,t:0,d:2.4};sfx.ok();fl(S.i===7?"安全確認完成":"整備完成 +1");if(q.say)bub(q.say,3200);
+$("#fb").textContent="✓ 答對了！（+"+(first?99:66)+"分）"+q.ex;score();pips();var n=$("#nx");n.textContent=S.i===7?"▶ 準備起飛！":"下一題 ▶";n.hidden=false;n.focus({preventScroll:true});
+setTimeout(function(){n.scrollIntoView({block:"nearest",behavior:"smooth"})},60)}
+else{S.tries++;b.disabled=true;b.classList.add("bad");b.querySelector(".mk").textContent="✕ 再想想";sfx.bad();$("#fb").textContent="再想想看～ "+q.h}}
+function next(){if(S.state!=="ok")return;sfx.click();if(S.i<7){S.i++;load();window.scrollTo(0,0)}
+else{S.state="take";S.tk=0;S.score+=990;score();$("#game").classList.add("tk");$("#nx").hidden=true;S.anim=null;sfx.fly();window.scrollTo(0,0);bub("敬禮！F-104，起飛！",4500)}}
+function finish(){S.state="res";var f=S.first,t=f===8?"空機99・整備達人":f>=5?"空機99・精銳學長":"空機99・同袍齊心",best=S.score;S.title=t;
+try{var b=+localStorage.getItem(KEY)||0;if(S.score>b)localStorage.setItem(KEY,S.score);else best=b}catch(e){}
+$("#rN").textContent=S.name;$("#rF").textContent=f+"／8";$("#rS").textContent=S.score+"分";$("#rB").textContent=best+"分";$("#rT").textContent=t;$("#cpm").textContent="";$("#ta").hidden=true;show("res");sfx.done()}
+function shareText(){var u=/^https?:$/.test(location.protocol)?" "+location.href.split("#")[0]:"";return"我完成了《空機99・F-104整備學堂》，首次答對"+S.first+"題，獲得"+S.score+"分，榮獲【"+S.title+"】！空機九九，友誼歷久彌堅！弟兄們一起來挑戰！"+u}
+function copy(){var t=shareText(),ta=$("#ta"),ok=false;
+function fail(){ta.hidden=false;ta.value=t;ta.focus();ta.select();$("#cpm").textContent="請長按文字，手動複製"}
+function good(){$("#cpm").textContent="✓ 已複製戰績！"}
+try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(good,fail);return}}catch(e){}
+try{ta.hidden=false;ta.value=t;ta.select();ok=document.execCommand("copy")}catch(e){}
+if(ok){ta.hidden=true;good()}else fail()}
+function home(){S=ns();clearTimeout(bt);show("home");updBest()}
+function updBest(){var b=0;try{b=+localStorage.getItem(KEY)||0}catch(e){}$("#best").textContent=b?"本機最高分："+b+"分":""}
+// ===== 事件（只註冊一次）=====
+$("#go").addEventListener("click",start);$("#nx").addEventListener("click",next);$("#again").addEventListener("click",start);$("#hm").addEventListener("click",home);$("#cp").addEventListener("click",copy);
+$("#opts").addEventListener("click",function(e){var b=e.target.closest("button.opt");if(b&&!b.disabled)pick(b.dataset.id,b)});
+document.querySelectorAll(".snd").forEach(function(b){b.addEventListener("click",function(){audioOn=!audioOn;setSnd();if(audioOn)sfx.click()})});
+document.addEventListener("pointerdown",function(){ac()},{once:true});
+document.addEventListener("visibilitychange",function(){if(document.hidden){running=false;try{AC&&AC.suspend()}catch(e){}}else{running=true;last=performance.now();try{AC&&audioOn&&AC.resume()}catch(e){}}});
+var cH=$("#cvH").getContext("2d"),cG=$("#cvG").getContext("2d");
+function loop(now){requestAnimationFrame(loop);if(!running){return}var dt=Math.min(.05,(now-last)/1000||0);last=now;T+=dt;
+if(S.anim){S.anim.t+=dt;if(S.anim.t>S.anim.d)S.anim=null}
+if(S.state==="take"){S.tk+=dt;if(S.tk>=5)finish()}
+if(cur==="home")scene(cH,"home");else if(cur==="game")scene(cG,S.state==="take"?"take":"game");else resDraw()}
+updBest();setSnd();last=performance.now();requestAnimationFrame(loop);
+})();
+</script></body></html>
